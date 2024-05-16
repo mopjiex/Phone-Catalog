@@ -1,9 +1,6 @@
 <script setup lang="ts">
-interface Props {
-    numPhones: (phones: number) => void;
-}
 
-const props: Props = defineProps({
+defineProps({
     numPhones: Function,
 });
 </script>

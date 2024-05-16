@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {ref, onMounted, watch, computed} from 'vue';
-import { usePhoneStore } from '@/store/phoneStore';
+import {ref, onMounted, computed} from 'vue';
+import { usePhoneStore} from '@/store/phoneStore';
 import { properties } from '@/utils/phoneAttributes';
 
 import ComparisonPropertyList from '@/components/AppMain/ComparisonPropertyList.vue';
@@ -8,7 +8,36 @@ import PhoneDisplayQuantity from '@/components/AppMain/PhoneDisplayQuantity.vue'
 import PhonePreviewList from '@/components/AppMain/PhonePreviewList.vue';
 import SwitchDifferences from '@/components/UI/checkbox/SwitchDifferences.vue';
 
-const phoneStore = usePhoneStore();
+interface Phone {
+    name: string;
+    image: string;
+    manufacturer: string;
+    releaseYear: string;
+    diagonal: string;
+    country: string;
+    memory: string;
+    screenRefreshRate: string;
+    nfs: string;
+    esim: string;
+    wirelessCharging: string;
+    cost: string;
+};
+
+interface DataPhones {
+    items: Phone[];
+};
+
+interface PhoneStore {
+    dataPhones: DataPhones;
+    trimmedDataPhones: Phone[]; 
+    numPhone: number;
+    getPhones: () => Promise<void>;
+    getTrimmedPhones: () => Promise<void>;
+    searchValue: string;
+    isLoadingPhones: boolean;
+};
+
+const phoneStore = usePhoneStore() as unknown as PhoneStore;
 
 const switchValue = ref<boolean | null>(null);
 const activeIndex = ref<number | null>(null);
@@ -27,10 +56,6 @@ const toggleActiveIndex = (index: number): void => {
         activeIndex.value = null;
         phoneStore.searchValue = '';
     }
-}
-
-interface Phone {
-    name: string;
 }
 
 const filteredPhones = computed(() =>
@@ -68,7 +93,6 @@ onMounted(() => {
                     >
                         <PhonePreviewList 
                             :dataPhones="phoneStore.dataPhones.items"
-                            :allDataPhones="phoneStore.allDataPhones"
                             :activeIndex="activeIndex"
                             :numPhone="phoneStore.numPhone"
                             :toggleActiveIndex="toggleActiveIndex"

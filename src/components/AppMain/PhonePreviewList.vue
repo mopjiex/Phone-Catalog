@@ -1,24 +1,29 @@
 <script setup lang="ts">
-import {ref, watch, onMounted} from 'vue';
-    
-interface Props {
-    dataPhones: any[];
-    allDataPhones: any[];
-    activeIndex: number;
-    numPhone: number;
-    toggleActiveIndex: (index: number) => void; // Assuming toggleActiveIndex takes an index
-    swapPhone: (fromIndex: number, toIndex: number) => void; // Assuming swapPhone takes from and to indexes
-    filtered: any[];
+
+interface Phone {
+    image: string;
+    name: string;
 }
 
-const props: Props = defineProps({
-    dataPhones: Array,
-    allDataPhones: Array,
-    activeIndex: Number,
-    numPhone: Number,
+defineProps({
+    dataPhones: {
+        type: Array as () => Phone[],
+        default: () => ([] as Phone[]),
+    },
+    activeIndex: {
+        type: Number,
+        default: 0,
+    },
+    numPhone: {
+        type: Number,
+        default: 0,
+    },
     toggleActiveIndex: Function,
     swapPhone: Function,
-    filtered: Array,
+    filtered: {
+        type: Array as () => Phone[],
+        default: () => ([] as Phone[]),
+    },
 });
 
 const searchValue = defineModel('searchValue');

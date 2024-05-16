@@ -1,7 +1,7 @@
 <script setup lang="ts">
   type SwitchState = boolean;
 
-  const switchValue = defineModel<SwitchState>('switch', false);
+  const switchValue = defineModel<SwitchState>('switch', {default: false});
   
 </script>
 
