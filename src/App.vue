@@ -4,7 +4,7 @@ import AppMain from '@/components/layout/AppMain.vue';
 </script>
 
 <template>
-    <div class="">
+    <div>
         <AppHeader/>
         <AppMain/>
     </div>

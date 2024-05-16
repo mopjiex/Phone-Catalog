@@ -1,41 +1,62 @@
-import { defineStore } from 'pinia'
-import {ref} from 'vue';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import { phonesUrl } from '@/utils/phoneAPI';
 import axios from 'axios';
+
+interface Phone {
+    name: string;
+    image: string;
+    manufacturer: string;
+    releaseYear: string;
+    diagonal: string;
+    country: string;
+    memory: string;
+    screenRefreshRate: string;
+    nfs: string;
+    esim: string;
+    wirelessCharging: string;
+    cost: string;
+};
+
 export const usePhoneStore = defineStore('phone', () => {
-    const dataPhones = ref(null);
-    const isLoadingPhones = ref(true);
-    const allDataPhones = ref([]);
-    const numPhone = ref(3);
-    const searchValue = ref('');
-    const getPhones = async() => {
+    const dataPhones = ref<Phone[] | null>(null);
+    const isLoadingPhones = ref<boolean>(true);
+    const allDataPhones = ref<Phone[]>([]);
+    const numPhone = ref<number>(3);
+    const searchValue = ref<string>('');
+
+    const getPhones = async () => {
         try {
             isLoadingPhones.value = true;
-            const {data} = await axios.get(`https://e2233a89b8ce7902.mokky.dev/phones`, {
+            const { data } = await axios.get<Phone[]>(phonesUrl, {
                 params: {
                     limit: numPhone.value,
-                }
+                },
             });
             dataPhones.value = data;
-        } catch(e) {
+        } catch (e) {
             console.log(e);
         } finally {
             isLoadingPhones.value = false;
         }
-    }
+    };
 
-    const getAllPhones = async() => {
+    const getAllPhones = async () => {
         try {
-            const {data} = await axios.get(`https://e2233a89b8ce7902.mokky.dev/phones`);
+            const { data } = await axios.get<Phone[]>(phonesUrl);
             allDataPhones.value = data.slice(numPhone.value);
-           
-        } catch(e) {
+        } catch (e) {
             console.log(e);
         }
-    }
-
+    };
 
     return {
-        dataPhones, isLoadingPhones, allDataPhones, numPhone, searchValue,
-        getPhones, getAllPhones
+        dataPhones,
+        isLoadingPhones,
+        allDataPhones,
+        numPhone,
+        searchValue,
+        getPhones,
+        getAllPhones,
     };
-})
+});

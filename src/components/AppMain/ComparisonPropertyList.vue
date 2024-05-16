@@ -15,6 +15,7 @@ const hasDifference = (key: string) => {
     const uniqueValues = new Set(props.dataPhones.map(item => item[key]));
     return uniqueValues.size > 1;
 };
+
 </script>
 
 <template>

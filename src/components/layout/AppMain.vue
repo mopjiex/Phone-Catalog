@@ -61,6 +61,7 @@ onMounted(() => {
                             max-sm:flex-col max-sm:items-center max-sm:gap-y-2 max-sm:mb-6"
                 >
                     <SwitchDifferences v-model:switch="switchValue"/>
+                    
                     <div class="flex w-full justify-between flex-wrap gap-y-4
                                 max-sm:flex-col max-sm:items-center max-sm:gap-y-2 max-sm:mb-6"  
                         v-if="!phoneStore.isLoadingPhones"
