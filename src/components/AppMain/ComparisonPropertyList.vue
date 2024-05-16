@@ -2,13 +2,13 @@
 interface Props {
     properties: any[];
     dataPhones: any[];
-    checkBox: boolean;
+    showDifferences: boolean;
 }
 
 const props: Props = defineProps({
     properties: Array,
     dataPhones: Array,
-    checkBox: Boolean,
+    showDifferences: Boolean,
 });
 
 const hasDifference = (key: string) => {
@@ -22,7 +22,7 @@ const hasDifference = (key: string) => {
     <div v-for="(property, index) in properties">
         <div class="w-full py-8 border-b border-[#CDCFD2] text-lg font-medium flex justify-between items-center gap-x-20 
                     max-sm:flex-col max-sm:text-center max-sm:gap-y-4" 
-            v-if="!props.checkBox || hasDifference(property.key)"
+            v-if="!props.showDifferences || hasDifference(property.key)"
         >
             <h2 class="w-[295px] uppercase text-[#A4A9B9] leading-5"> 
                 {{ property.title }}

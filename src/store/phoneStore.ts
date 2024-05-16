@@ -21,7 +21,7 @@ interface Phone {
 export const usePhoneStore = defineStore('phone', () => {
     const dataPhones = ref<Phone[] | null>(null);
     const isLoadingPhones = ref<boolean>(true);
-    const allDataPhones = ref<Phone[]>([]);
+    const trimmedDataPhones = ref<Phone[]>([]);
     const numPhone = ref<number>(3);
     const searchValue = ref<string>('');
 
@@ -41,10 +41,10 @@ export const usePhoneStore = defineStore('phone', () => {
         }
     };
 
-    const getAllPhones = async () => {
+    const getTrimmedPhones = async () => {
         try {
             const { data } = await axios.get<Phone[]>(phonesUrl);
-            allDataPhones.value = data.slice(numPhone.value);
+            trimmedDataPhones.value = data.slice(numPhone.value);
         } catch (e) {
             console.log(e);
         }
@@ -53,10 +53,10 @@ export const usePhoneStore = defineStore('phone', () => {
     return {
         dataPhones,
         isLoadingPhones,
-        allDataPhones,
+        trimmedDataPhones,
         numPhone,
         searchValue,
         getPhones,
-        getAllPhones,
+        getTrimmedPhones,
     };
 });
